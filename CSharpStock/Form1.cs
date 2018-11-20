@@ -19,7 +19,7 @@ namespace CSharpStock
         public Form1()
         {
             InitializeComponent();
-            main = Common.GetIntPtr("SwitchHosts");
+            main = Common.GetIntPtr("xiadan");
         }
 
         public struct WindowInfo
@@ -31,7 +31,7 @@ namespace CSharpStock
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            main = Common.GetIntPtr("SwitchHosts");
+            main = Common.GetIntPtr("xiadan");
             IntPtr tree = FindWindowEx(main, 0, "SysTreeView32", "");
             PostMessage(main, 256, Keys.F1, 2);
             List<WindowInfo> wndList = addToDick(main);
