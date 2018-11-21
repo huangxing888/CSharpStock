@@ -142,17 +142,49 @@ namespace CSharpStock
         private void button1_Click(object sender, EventArgs e)
         {
             main = Common.GetIntPtrByProcess("SwitchHosts");
+            Common.SetTitle(main, "hello");
+            addToDick(main);
+            MessageBox.Show(Common.GetTitle(main));
             //IntPtr tree = FindWindowEx(main, 0, "SysTreeView32", "");
             //PostMessage(main, 256, Keys.F1, 2);
-            getStock();
-            Common.Click(Common.GetIntPtrByControlID(main, "FFFF830B.000013EE"));
+            //getStock();
+            //List<WindowInfo> wndList = addToDick(main);
+            //IntPtr child1 = GetDlgItem(main, 0x00000000);
+            //IntPtr child2 = GetDlgItem(child1, 0x0000E900);
+            //IntPtr child3 = GetDlgItem(child2, 0x0000E901);
+            //IntPtr child4 = GetDlgItem(child3, 0x00000417);
+            //IntPtr child5 = GetDlgItem(child4, 0x000000C8);
+            //IntPtr child6 = GetDlgItem(child5, 0x00000417);
+            //SendMessage(child6, 0x111, 0, 0);
+            //MessageBox.Show(System.Windows.Forms.Clipboard.GetText().ToString());
+            ////SendMessage,0x111,57634,0,CVirtualGridCtrl2,同花顺
+
+            //int length = GetWindowTextLength(child6);
+            //StringBuilder windowName = new StringBuilder(length + 1);
+            //GetWindowText(child6, windowName, windowName.Capacity);
+            //MessageBox.Show(windowName.ToString());
+
+
+            //SetWindowPos(main, -1, 0, 0, 0, 0, 1 | 2);
+            //keybd_event(vbKeyControl, 0, 0, 0);  //按下ctrl，在下面释放之前，他的状态一直还是被按下的
+            //keybd_event(vbKeyS, 0, 0, 0);  //按下s
+            //Thread.Sleep(10);
+            //keybd_event(vbKeyS, 0, 0x02, 0);   //释放s键 
+            //keybd_event(vbKeyControl, 0, 0x02, 0);  //释放 ctrl 键
+            //Thread.Sleep(100);
+            //IntPtr text = FindWindow(null, "另存为");
+            //IntPtr edit = FindWindowEx(text, 0, "Edit", null);
+            //SendMessage(edit, WM_SETTEXT, IntPtr.Zero, "d:\\" + DateTime.Now.Ticks + ".xls");
+            //Thread.Sleep(100);
+            //IntPtr save = FindWindowEx(text, 0, "Button", "保存(&S)");
+            //SendMessage(save, WM_CLICK, IntPtr.Zero, "");
 
         }
 
         public void getStock()
         {
             Common.BringToFront(main);
-            Common.SendKeyWithCtrl(User.VK_KeyC);
+            Common.SendKeyWithCtrl(vbKeyC);
             MessageBox.Show(System.Windows.Forms.Clipboard.GetText());
         }
 
@@ -160,64 +192,49 @@ namespace CSharpStock
         {
             //用来保存窗口对象 列表
             List<WindowInfo> wndList = new List<WindowInfo>();
-
             //enum all desktop windows 
-            EnumChildWindows(window, delegate (IntPtr hWnd, int lParam)
-                 {
-                     WindowInfo wnd = new WindowInfo();
-                     StringBuilder sb = new StringBuilder(256);
+            User.EnumChildWindows(window, delegate (IntPtr hWnd, int lParam)
+            {
+                WindowInfo wnd = new WindowInfo();
+                StringBuilder sb = new StringBuilder(256);
 
-                    //get hwnd 
-                    wnd.hWnd = hWnd;
+                //get hwnd 
+                wnd.hWnd = (IntPtr)hWnd;
 
-                    //get window name  
-                    GetWindowTextW(hWnd, sb, sb.Capacity);
-                     wnd.szWindowName = sb.ToString();
+                //get window name  
+                User.GetWindowText((IntPtr)hWnd, sb, sb.Capacity);
+                wnd.szWindowName = sb.ToString();
 
-                    //get window class 
-                    GetClassNameW(hWnd, sb, sb.Capacity);
-                     wnd.szClassName = sb.ToString();
+                //get window class 
+                User.GetClassName((IntPtr)hWnd, wnd.szClassName, sb.Capacity);
+                wnd.szClassName = sb.ToString();
 
-                     wnd.DlgCtrlID = GetDlgCtrlID(hWnd);
+                wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd);
 
-                    //add it into list 
-                    wndList.Add(wnd);
-                     return true;
-                 }, 0);
+                //add it into list 
+                wndList.Add(wnd);
+                return true;
+            }, 0);
             return wndList;
         }
-        public delegate bool CallBack(IntPtr hwnd, int y);
-        [DllImport("user32.dll")]
-        public static extern int EnumChildWindows(IntPtr hWndParent, CallBack lpEnumFunc, int lParam);
-        [DllImport("user32")]
-        public static extern long GetDlgCtrlID(IntPtr hwnd);// &&通过句柄得到控件ID
-        //获取窗口Text 
-        [DllImport("user32.dll")]
-        private static extern int GetWindowTextW(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpString, int nMaxCount);
-        [DllImport("user32.dll", EntryPoint = "PostMessageA", SetLastError = true)]
-        public static extern int PostMessage(IntPtr hWnd, int Msg, Keys wParam, int lParam);
-        //获取窗口类名 
-        [DllImport("user32.dll")]
-        private static extern int GetClassNameW(IntPtr hWnd, [MarshalAs(UnmanagedType.LPWStr)]StringBuilder lpString, int nMaxCount);
-
         private void button2_Click(object sender, EventArgs e)
         {
-            PostMessage(main, 256, Keys.F1, 2);
+            User.PostMessage(main, 256, User.VK_F1, 2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            PostMessage(main, 256, Keys.F2, 2);
+            User.PostMessage(main, 256, User.VK_F2, 2);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            PostMessage(main, 256, Keys.F3, 2);
+            User.PostMessage(main, 256, User.VK_F3, 2);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            PostMessage(main, 256, Keys.F4, 2);
+            User.PostMessage(main, 256, User.VK_F4, 2);
         }
     }
 }

@@ -48,18 +48,18 @@ namespace CSharpStock
         /// <summary>
         /// 鼠标点击
         /// </summary>
-        /// <param name="intPtr"></param>
-        public static void Click(IntPtr intPtr)
+        /// <param name="hWnd"></param>
+        public static void Click(IntPtr hWnd)
         {
-            User.SendMessage(intPtr, User.WM_CLICK, 0, IntPtr.Zero);
+            User.SendMessage(hWnd, User.WM_CLICK, 0, IntPtr.Zero);
         }
         /// <summary>
         /// 窗体在最前显示
         /// </summary>
-        /// <param name="intPtr"></param>
-        public static void BringToFront(IntPtr intPtr)
+        /// <param name="hWnd"></param>
+        public static void BringToFront(IntPtr hWnd)
         {
-            User.SetWindowPos(intPtr, IntPtr.Zero, 0, 0, 0, 0, 1 | 2);
+            User.SetWindowPos(hWnd, IntPtr.Zero, 0, 0, 0, 0, 1 | 2);
         }
         /// <summary>
         /// 模拟键盘按下
@@ -82,6 +82,26 @@ namespace CSharpStock
             Thread.Sleep(10);
             User.keybd_event(key, 0, User.KEYEVENTF_KEYUP, 0);
             User.keybd_event(User.VK_CONTROL, 0, User.KEYEVENTF_KEYUP, 0);
+        }
+        /// <summary>
+        /// 获取控件文本
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        public static string GetTitle(IntPtr hWnd)
+        {
+            StringBuilder sb = new StringBuilder(User.GetWindowTextLength(hWnd));
+            User.GetWindowText(hWnd, sb, sb.Capacity);
+            return sb.ToString();
+        }
+        /// <summary>
+        /// 设置控件文本
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="text"></param>
+        public static void SetTitle(IntPtr hWnd, string text)
+        {
+            User.SendMessage(hWnd, User.WM_SETTEXT, 0, text);
         }
     }
 }

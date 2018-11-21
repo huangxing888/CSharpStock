@@ -642,6 +642,8 @@ namespace Win32
         [DllImport("user32")] public static extern int EndDialog(HANDLE hDlg, int nResult);
         [DllImport("user32")] public static extern int EndPaint(HWND hwnd, ref PAINTSTRUCT lpPaint);
         [DllImport("user32")] public static extern int EnumChildWindows(HWND hwndParent, ref int lpEnumFunc, int lParam);
+        public delegate bool CallBack(IntPtr hwnd, int y);
+        [DllImport("user32")] public static extern int EnumChildWindows(IntPtr hWndParent, CallBack lpEnumFunc, int lParam);
         [DllImport("user32")] public static extern int EnumClipboardFormats(int wFormat);
         [DllImport("user32")] public static extern int EnumDesktopWindows(HANDLE hDesktop, ref int lpfn, int lParam);
         [DllImport("user32")] public static extern int EnumDesktops(HANDLE hwinsta, ref int lpEnumFunc, int lParam);
@@ -680,6 +682,11 @@ namespace Win32
         [DllImport("user32")] public static extern int GetDCEx(HWND hwnd, HANDLE hrgnclip, int fdwOptions);
         [DllImport("user32")] public static extern int GetDesktopWindow();
         [DllImport("user32")] public static extern int GetDialogBaseUnits();
+        /// <summary>
+        /// 获取控件ID
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
         [DllImport("user32")] public static extern int GetDlgCtrlID(HWND hwnd);
         [DllImport("user32")] public static extern int GetDlgItem(HANDLE hDlg, int nIDDlgItem);
         [DllImport("user32")] public static extern int GetDlgItemInt(HANDLE hDlg, int nIDDlgItem, ref int lpTranslated, int bSigned);
@@ -831,6 +838,7 @@ namespace Win32
         [DllImport("user32")] public static extern int ScrollWindowEx(HWND hwnd, int dx, int dy, ref RECT lprcScroll, ref RECT lprcClip, HANDLE hrgnUpdate, ref RECT lprcUpdate, int fuScroll);
         [DllImport("user32")] public static extern int SendDlgItemMessage(HANDLE hDlg, int nIDDlgItem, int wMsg, int wParam, int lParam);
         [DllImport("user32")] public static extern int SendMessage(HWND hwnd, int wMsg, int wParam, IntPtr lParam);
+        [DllImport("user32")] public static extern int SendMessage(HWND hwnd, int wMsg, int wParam, string lParam);
         [DllImport("user32")] public static extern int SendMessageCallback(HWND hwnd, int msg, int wParam, int lParam, ref int lpResultCallBack, int dwData);
         [DllImport("user32")] public static extern int SendMessageTimeout(HWND hwnd, int msg, int wParam, int lParam, int fuFlags, int uTimeout, ref int lpdwResult);
         [DllImport("user32")] public static extern int SendNotifyMessage(HWND hwnd, int msg, int wParam, int lParam);
