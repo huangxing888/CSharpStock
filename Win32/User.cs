@@ -874,6 +874,17 @@ namespace Win32
         [DllImport("user32")] public static extern int SetWindowContextHelpId(HWND hwnd, int dw);
         [DllImport("user32")] public static extern int SetWindowLong(HWND hwnd, int nIndex, int dwNewLong);
         [DllImport("user32")] public static extern int SetWindowPlacement(HWND hwnd, ref WINDOWPLACEMENT lpwndpl);
+        /// <summary>
+        /// 设置窗体位置
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="hwndInsertAfter"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="cx"></param>
+        /// <param name="cy"></param>
+        /// <param name="wFlags"></param>
+        /// <returns></returns>
         [DllImport("user32")] public static extern int SetWindowPos(HWND hwnd, HWND hwndInsertAfter, int x, int y, int cx, int cy, int wFlags);
         [DllImport("user32")] public static extern int SetWindowRgn(HWND hwnd, HANDLE hRgn, int bRedraw);
         [DllImport("user32")] public static extern int SetWindowText(HWND hwnd, string lpString);
@@ -927,7 +938,7 @@ namespace Win32
         [DllImport("user32")] public static extern string CharPrev(string lpszStart, string lpszCurrent);
         [DllImport("user32")] public static extern string CharUpper(string lpsz);
         [DllImport("user32")] public static extern void PostQuitMessage(int nExitCode);
-        [DllImport("user32")] public static extern void Keybd_event(Byte bVk, Byte bScan, int dwFlags, int dwExtraInfo);
+        [DllImport("user32")] public static extern void keybd_event(Byte bVk, Byte bScan, int dwFlags, int dwExtraInfo);
         [DllImport("user32")] public static extern void Mouse_event(int dwFlags, int dx, int dy, int cButtons, int dwExtraInfo);
         [DllImport("user32")] public static extern void SetDebugErrorLevel(int dwLevel);
         [DllImport("user32")] public static extern void SetLastErrorEx(int dwErrCode, int dwType);
@@ -1509,6 +1520,7 @@ namespace Win32
         public const int IDYES = 6;
         public const int INVALID_HANDLE_VALUE = -1;
         public const int KEYEVENTF_EXTENDEDKEY = 0x1;
+        public const int KEYEVENTF_KEYDOWN = 0x0;
         public const int KEYEVENTF_KEYUP = 0x2;
         public const int KF_ALTDOWN = 0x2000;
         public const int KF_DLGMODE = 0x800;
@@ -2090,6 +2102,33 @@ namespace Win32
         public const int VK_ESCAPE = 0x1B;
         public const int VK_EXECUTE = 0x2B;
         public const int VK_EXSEL = 0xF8;
+        //常用键 字母键A到Z
+        public const int VK_KeyA = 65;
+        public const int VK_KeyB = 66;
+        public const int VK_KeyC = 67;
+        public const int VK_KeyD = 68;
+        public const int VK_KeyE = 69;
+        public const int VK_KeyF = 70;
+        public const int VK_KeyG = 71;
+        public const int VK_KeyH = 72;
+        public const int VK_KeyI = 73;
+        public const int VK_KeyJ = 74;
+        public const int VK_KeyK = 75;
+        public const int VK_KeyL = 76;
+        public const int VK_KeyM = 77;
+        public const int VK_KeyN = 78;
+        public const int VK_KeyO = 79;
+        public const int VK_KeyP = 80;
+        public const int VK_KeyQ = 81;
+        public const int VK_KeyR = 82;
+        public const int VK_KeyS = 83;
+        public const int VK_KeyT = 84;
+        public const int VK_KeyU = 85;
+        public const int VK_KeyV = 86;
+        public const int VK_KeyW = 87;
+        public const int VK_KeyX = 88;
+        public const int VK_KeyY = 89;
+        public const int VK_KeyZ = 90;
         public const int VK_F1 = 0x70;
         public const int VK_F10 = 0x79;
         public const int VK_F11 = 0x7A;
@@ -2201,6 +2240,7 @@ namespace Win32
         public const int WM_CHARTOITEM = 0x2F;
         public const int WM_CHILDACTIVATE = 0x22;
         public const int WM_CLEAR = 0x303;
+        public const int WM_CLICK = 0xF5;
         public const int WM_CLOSE = 0x10;
         public const int WM_COMMAND = 0x111;
         public const int WM_COMMNOTIFY = 0x44;

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using Win32;
 
 namespace CSharpStock
 {
@@ -129,7 +129,7 @@ namespace CSharpStock
         public Form1()
         {
             InitializeComponent();
-            main = Common.GetIntPtr("xiadan");
+            main = Common.GetIntPtrByProcess("xiadan");
         }
 
         public struct WindowInfo
@@ -141,54 +141,18 @@ namespace CSharpStock
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            main = Common.GetIntPtr("xiadan");
-            IntPtr tree = FindWindowEx(main, 0, "SysTreeView32", "");
+            main = Common.GetIntPtrByProcess("SwitchHosts");
+            //IntPtr tree = FindWindowEx(main, 0, "SysTreeView32", "");
             //PostMessage(main, 256, Keys.F1, 2);
-            //getStock();
-            Common.getItem(main, "00000000.0000E900");
-            List<WindowInfo> wndList = addToDick(main);
-            IntPtr child1 = GetDlgItem(main, 0x00000000);
-            IntPtr child2 = GetDlgItem(child1, 0x0000E900);
-            IntPtr child3 = GetDlgItem(child2, 0x0000E901);
-            IntPtr child4 = GetDlgItem(child3, 0x00000417);
-            IntPtr child5 = GetDlgItem(child4, 0x000000C8);
-            IntPtr child6 = GetDlgItem(child5, 0x00000417);
-            //SendMessage(child6, 0x111, 0, 0);
-            //MessageBox.Show(System.Windows.Forms.Clipboard.GetText().ToString());
-            ////SendMessage,0x111,57634,0,CVirtualGridCtrl2,同花顺
-
-            //int length = GetWindowTextLength(child6);
-            //StringBuilder windowName = new StringBuilder(length + 1);
-            //GetWindowText(child6, windowName, windowName.Capacity);
-            //MessageBox.Show(windowName.ToString());
-
-
-            //SetWindowPos(main, -1, 0, 0, 0, 0, 1 | 2);
-            //keybd_event(vbKeyControl, 0, 0, 0);  //按下ctrl，在下面释放之前，他的状态一直还是被按下的
-            //keybd_event(vbKeyS, 0, 0, 0);  //按下s
-            //Thread.Sleep(10);
-            //keybd_event(vbKeyS, 0, 0x02, 0);   //释放s键 
-            //keybd_event(vbKeyControl, 0, 0x02, 0);  //释放 ctrl 键
-            //Thread.Sleep(100);
-            //IntPtr text = FindWindow(null, "另存为");
-            //IntPtr edit = FindWindowEx(text, 0, "Edit", null);
-            //SendMessage(edit, WM_SETTEXT, IntPtr.Zero, "d:\\" + DateTime.Now.Ticks + ".xls");
-            //Thread.Sleep(100);
-            //IntPtr save = FindWindowEx(text, 0, "Button", "保存(&S)");
-            //SendMessage(save, WM_CLICK, IntPtr.Zero, "");
+            getStock();
+            Common.Click(Common.GetIntPtrByControlID(main, "FFFF830B.000013EE"));
 
         }
 
         public void getStock()
         {
-            SetWindowPos(main, -1, 0, 0, 0, 0, 1 | 2);
-            PostMessage(main, 256, Keys.F4, 2);
-            Thread.Sleep(100);
-            keybd_event(vbKeyControl, 0, 0, 0);  //按下ctrl，在下面释放之前，他的状态一直还是被按下的
-            keybd_event(vbKeyC, 0, 0, 0);  //按下s
-            Thread.Sleep(10);
-            keybd_event(vbKeyC, 0, 0x02, 0);   //释放s键 
-            keybd_event(vbKeyControl, 0, 0x02, 0);  //释放 ctrl 键
+            Common.BringToFront(main);
+            Common.SendKeyWithCtrl(User.VK_KeyC);
             MessageBox.Show(System.Windows.Forms.Clipboard.GetText());
         }
 
@@ -222,36 +186,9 @@ namespace CSharpStock
                  }, 0);
             return wndList;
         }
-        [DllImport("user32.dll")]
-        public static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo);
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern int SetWindowText(IntPtr hWnd, string text);
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int y, int Width, int Height, int flags);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        private static extern int SendMessage(IntPtr hWnd, int wMsg, uint wParam, uint lParam);
-        [DllImport("user32.dll", EntryPoint = "SendMessageA")]
-        private static extern int SendMessage(IntPtr hwnd, int wMsg, IntPtr wParam, string lParam);
         public delegate bool CallBack(IntPtr hwnd, int y);
-        [DllImport("user32.dll", EntryPoint = "FindWindowA", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll", EntryPoint = "FindWindowEx", SetLastError = true)]
-        private static extern IntPtr FindWindowEx(IntPtr hwndParent, uint hwndChildAfter, string lpszClass, string lpszWindow);
-        
-        [DllImport("user32.dll", EntryPoint = "SetForegroundWindow", SetLastError = true)]
-        private static extern void SetForegroundWindow(IntPtr hwnd);
-        [DllImport("user32.dll")]
-        public static extern int EnumWindows(CallBack x, int y);
         [DllImport("user32.dll")]
         public static extern int EnumChildWindows(IntPtr hWndParent, CallBack lpEnumFunc, int lParam);
-        [DllImport("user32")]
-        public static extern int GetWindowText(IntPtr hwnd, StringBuilder lptrString, int nMaxCount);
-        [DllImport("user32.dll")]
-        public static extern int GetWindowTextLength(IntPtr hWnd);
-        [DllImport("user32.dll ", EntryPoint = "GetDlgItem")]
-        public static extern IntPtr GetDlgItem(IntPtr hDlg, int nIDDlgItem);
         [DllImport("user32")]
         public static extern long GetDlgCtrlID(IntPtr hwnd);// &&通过句柄得到控件ID
         //获取窗口Text 
