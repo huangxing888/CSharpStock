@@ -872,6 +872,13 @@ namespace Win32
 
     public abstract class Kernel
     {
+        public const int PROCESS_VM_OPERATION = 0x0008;
+        public const int PROCESS_VM_READ = 0x0010;
+        public const int PROCESS_VM_WRITE = 0x0020;
+        public const int MEM_RESERVE = 0x2000;
+        public const int MEM_COMMIT = 0x1000;
+        public const uint MEM_RELEASE = 0x8000;
+        public const int PAGE_READWRITE = 4;
         [DllImport("kernel32")] public static extern void OutputDebugString(string lpszOutputString);
         [DllImport("KERNEL32")] public static extern int ConvertDefaultLocale(int Locale);
         [DllImport("KERNEL32")] public static extern int EnumDateFormats(int lpDateFmtEnumProc, int Locale, int dwFlags);
@@ -1204,7 +1211,9 @@ namespace Win32
         [DllImport("kernel32")] public static extern int UpdateResource(HANDLE hUpdate, string lpType, string lpName, int wLanguage, IntPtr lpData, int cbData);
         [DllImport("kernel32")] public static extern int VerLanguageName(int wLang, string szLang, int nSize);
         [DllImport("kernel32")] public static extern int VirtualAlloc(IntPtr lpAddress, int dwSize, int flAllocationType, int flProtect);
+        [DllImport("kernel32")] public static extern int VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
         [DllImport("kernel32")] public static extern int VirtualFree(IntPtr lpAddress, int dwSize, int dwFreeType);
+        [DllImport("kernel32")] public static extern int VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint dwFreeType);
         [DllImport("kernel32")] public static extern int VirtualLock(IntPtr lpAddress, int dwSize);
         [DllImport("kernel32")] public static extern int VirtualProtect(IntPtr lpAddress, int dwSize, int flNewProtect, ref int lpflOldProtect);
         [DllImport("kernel32")] public static extern int VirtualProtectEx(HANDLE hProcess, IntPtr lpAddress, int dwSize, int flNewProtect, ref int lpflOldProtect);

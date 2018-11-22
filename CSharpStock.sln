@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharpStock", "CSharpStock\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Win32", "Win32\Win32.csproj", "{3FD297DB-F255-40B0-9DE2-ED0AC5675DF4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinCtrl", "WinCtrl\WinCtrl.csproj", "{1085DB78-3BBE-4060-833F-A001AA8A2B01}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3FD297DB-F255-40B0-9DE2-ED0AC5675DF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FD297DB-F255-40B0-9DE2-ED0AC5675DF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FD297DB-F255-40B0-9DE2-ED0AC5675DF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1085DB78-3BBE-4060-833F-A001AA8A2B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1085DB78-3BBE-4060-833F-A001AA8A2B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1085DB78-3BBE-4060-833F-A001AA8A2B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1085DB78-3BBE-4060-833F-A001AA8A2B01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
