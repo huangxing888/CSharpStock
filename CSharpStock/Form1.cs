@@ -17,115 +17,6 @@ namespace CSharpStock
 {
     public partial class Form1 : Form
     {
-        #region bVk参数 常量定义
-
-        public const byte vbKeyLButton = 0x1;    // 鼠标左键
-        public const byte vbKeyRButton = 0x2;    // 鼠标右键
-        public const byte vbKeyCancel = 0x3;     // CANCEL 键
-        public const byte vbKeyMButton = 0x4;    // 鼠标中键
-        public const byte vbKeyBack = 0x8;       // BACKSPACE 键
-        public const byte vbKeyTab = 0x9;        // TAB 键
-        public const byte vbKeyClear = 0xC;      // CLEAR 键
-        public const byte vbKeyReturn = 0xD;     // ENTER 键
-        public const byte vbKeyShift = 0x10;     // SHIFT 键
-        public const byte vbKeyControl = 0x11;   // CTRL 键
-        public const byte vbKeyAlt = 18;         // Alt 键  (键码18)
-        public const byte vbKeyMenu = 0x12;      // MENU 键
-        public const byte vbKeyPause = 0x13;     // PAUSE 键
-        public const byte vbKeyCapital = 0x14;   // CAPS LOCK 键
-        public const byte vbKeyEscape = 0x1B;    // ESC 键
-        public const byte vbKeySpace = 0x20;     // SPACEBAR 键
-        public const byte vbKeyPageUp = 0x21;    // PAGE UP 键
-        public const byte vbKeyEnd = 0x23;       // End 键
-        public const byte vbKeyHome = 0x24;      // HOME 键
-        public const byte vbKeyLeft = 0x25;      // LEFT ARROW 键
-        public const byte vbKeyUp = 0x26;        // UP ARROW 键
-        public const byte vbKeyRight = 0x27;     // RIGHT ARROW 键
-        public const byte vbKeyDown = 0x28;      // DOWN ARROW 键
-        public const byte vbKeySelect = 0x29;    // Select 键
-        public const byte vbKeyPrint = 0x2A;     // PRINT SCREEN 键
-        public const byte vbKeyExecute = 0x2B;   // EXECUTE 键
-        public const byte vbKeySnapshot = 0x2C;  // SNAPSHOT 键
-        public const byte vbKeyDelete = 0x2E;    // Delete 键
-        public const byte vbKeyHelp = 0x2F;      // HELP 键
-        public const byte vbKeyNumlock = 0x90;   // NUM LOCK 键
-
-        //常用键 字母键A到Z
-        public const byte vbKeyA = 65;
-        public const byte vbKeyB = 66;
-        public const byte vbKeyC = 67;
-        public const byte vbKeyD = 68;
-        public const byte vbKeyE = 69;
-        public const byte vbKeyF = 70;
-        public const byte vbKeyG = 71;
-        public const byte vbKeyH = 72;
-        public const byte vbKeyI = 73;
-        public const byte vbKeyJ = 74;
-        public const byte vbKeyK = 75;
-        public const byte vbKeyL = 76;
-        public const byte vbKeyM = 77;
-        public const byte vbKeyN = 78;
-        public const byte vbKeyO = 79;
-        public const byte vbKeyP = 80;
-        public const byte vbKeyQ = 81;
-        public const byte vbKeyR = 82;
-        public const byte vbKeyS = 83;
-        public const byte vbKeyT = 84;
-        public const byte vbKeyU = 85;
-        public const byte vbKeyV = 86;
-        public const byte vbKeyW = 87;
-        public const byte vbKeyX = 88;
-        public const byte vbKeyY = 89;
-        public const byte vbKeyZ = 90;
-
-        //数字键盘0到9
-        public const byte vbKey0 = 48;    // 0 键
-        public const byte vbKey1 = 49;    // 1 键
-        public const byte vbKey2 = 50;    // 2 键
-        public const byte vbKey3 = 51;    // 3 键
-        public const byte vbKey4 = 52;    // 4 键
-        public const byte vbKey5 = 53;    // 5 键
-        public const byte vbKey6 = 54;    // 6 键
-        public const byte vbKey7 = 55;    // 7 键
-        public const byte vbKey8 = 56;    // 8 键
-        public const byte vbKey9 = 57;    // 9 键
-
-
-        public const byte vbKeyNumpad0 = 0x60;    //0 键
-        public const byte vbKeyNumpad1 = 0x61;    //1 键
-        public const byte vbKeyNumpad2 = 0x62;    //2 键
-        public const byte vbKeyNumpad3 = 0x63;    //3 键
-        public const byte vbKeyNumpad4 = 0x64;    //4 键
-        public const byte vbKeyNumpad5 = 0x65;    //5 键
-        public const byte vbKeyNumpad6 = 0x66;    //6 键
-        public const byte vbKeyNumpad7 = 0x67;    //7 键
-        public const byte vbKeyNumpad8 = 0x68;    //8 键
-        public const byte vbKeyNumpad9 = 0x69;    //9 键
-        public const byte vbKeyMultiply = 0x6A;   // MULTIPLICATIONSIGN(*)键
-        public const byte vbKeyAdd = 0x6B;        // PLUS SIGN(+) 键
-        public const byte vbKeySeparator = 0x6C;  // ENTER 键
-        public const byte vbKeySubtract = 0x6D;   // MINUS SIGN(-) 键
-        public const byte vbKeyDecimal = 0x6E;    // DECIMAL POINT(.) 键
-        public const byte vbKeyDivide = 0x6F;     // DIVISION SIGN(/) 键
-
-
-        //F1到F12按键
-        public const byte vbKeyF1 = 0x70;   //F1 键
-        public const byte vbKeyF2 = 0x71;   //F2 键
-        public const byte vbKeyF3 = 0x72;   //F3 键
-        public const byte vbKeyF4 = 0x73;   //F4 键
-        public const byte vbKeyF5 = 0x74;   //F5 键
-        public const byte vbKeyF6 = 0x75;   //F6 键
-        public const byte vbKeyF7 = 0x76;   //F7 键
-        public const byte vbKeyF8 = 0x77;   //F8 键
-        public const byte vbKeyF9 = 0x78;   //F9 键
-        public const byte vbKeyF10 = 0x79;  //F10 键
-        public const byte vbKeyF11 = 0x7A;  //F11 键
-        public const byte vbKeyF12 = 0x7B;  //F12 键
-
-        #endregion
-        public const int WM_SETTEXT = 0x000C;
-        public const int WM_CLICK = 0x00F5;
         IntPtr main;
         public Form1()
         {
@@ -140,25 +31,12 @@ namespace CSharpStock
             public string szClassName;
             public long DlgCtrlID;
         }
-        private void button1_Click(object sender, EventArgs e)
-        {
-            main = Common.GetIntPtrByProcess("xiadan");
-            IntPtr treePtr = Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E900.00000081.000000C8.00000081");
-
-            SysTreeView32 tree = new SysTreeView32(treePtr);
-            SysTreeView32_Item i = tree.FirstItem;
-            while(i!=null)
-            {
-                richTextBox1.AppendText(i.text + "\n");
-                i = i.NextItem;
-            }
-        }
 
 
         public void getStock()
         {
             Common.BringToFront(main);
-            Common.SendKeyWithCtrl(vbKeyC);
+            Common.SendKeyWithCtrl(User.VK_KeyC);
             MessageBox.Show(System.Windows.Forms.Clipboard.GetText());
         }
 
@@ -214,6 +92,363 @@ namespace CSharpStock
         private void button6_Click(object sender, EventArgs e)
         {
             Common.Click(Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E901.00000000.00008016"));
+        }
+        private void button1_Click(object sender, EventArgs e)
+        {
+            read(sender, e);
+            //main = Common.GetIntPtrByProcess("xiadan");
+            //IntPtr treePtr = Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E900.00000081.000000C8.00000081");
+
+            //SysTreeView32 tree = new SysTreeView32(treePtr);
+            //SysTreeView32_Item i = tree.FirstItem;
+            //while(i!=null)
+            //{
+            //    richTextBox1.AppendText(i.text + "\n");
+            //    i = i.NextItem;
+            //}
+        }
+        public const int LVM_FIRST = 0x1000;
+        public const int LVM_GETITEMCOUNT = LVM_FIRST + 4;
+        public const int LVM_GETHEADER = LVM_FIRST + 31;
+        public const int LVM_GETITEMTEXT = LVM_FIRST + 45;//获取列表内的内容
+        public const int LVM_GETITEMW = LVM_FIRST + 75;
+        public const int HDM_FIRST = 0x1200;
+        public const int HDM_GETITEMCOUNT = HDM_FIRST + 0;
+        public const int HDM_ORDERTOINDEX = HDM_FIRST + 15;
+        public const int HDM_GETITEMW = 4619;
+        public const int HDM_SETIMAGELIST = 4616;
+        public const int HDM_SETHOTDIVIDER = 4627;
+        public const int HDM_HITTEST = 4614;
+        public const int HDM_GETIMAGELIST = 4617;
+        public const int HDM_GETORDERARRAY = 4625;
+        public const int HDM_INSERTITEMA = 4609;
+
+
+        [DllImport("user32.DLL")]
+        public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
+        [DllImport("user32.DLL")]
+        public static extern IntPtr FindWindow(string lpszClass, string lpszWindow);
+        [DllImport("user32.DLL")]
+        public static extern IntPtr FindWindowEx(IntPtr hwndParent,
+            IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        [DllImport("user32.dll")]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd,
+            out uint dwProcessId);
+
+        public const uint PROCESS_VM_OPERATION = 0x0008;
+        public const uint PROCESS_VM_READ = 0x0010;
+        public const uint PROCESS_VM_WRITE = 0x0020;
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr OpenProcess(uint dwDesiredAccess,
+            bool bInheritHandle, uint dwProcessId);
+        public const uint MEM_COMMIT = 0x1000;
+        public const uint MEM_RELEASE = 0x8000;
+
+        public const uint MEM_RESERVE = 0x2000;
+        public const uint PAGE_READWRITE = 4;
+
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress,
+            uint dwSize, uint flAllocationType, uint flProtect);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress,
+           uint dwSize, uint dwFreeType);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool CloseHandle(IntPtr handle);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress,
+           IntPtr lpBuffer, int nSize, ref uint vNumberOfBytesRead);
+
+        [DllImport("kernel32.dll")]
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress,
+           IntPtr lpBuffer, int nSize, ref uint vNumberOfBytesRead);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct LVITEM
+        {
+            public uint mask;
+            public int iItem;
+            public int iSubItem;
+            public uint state;
+            public uint stateMask;
+            public IntPtr pszText; // string 
+            public int cchTextMax;
+            public int iImage;
+            public IntPtr lParam;
+            public int iIndent;
+            public int iGroupId;
+            public uint cColumns;
+            public uint puColumns;
+            public IntPtr piColFmt;
+            public int iGroup;
+
+        }
+        public struct LVCOLUMNW
+        {
+            public uint mask;
+            public int fmt;
+            public int cx;
+            public IntPtr pszText;
+            public int cchTextMax;
+            public int iSubItem;
+            public int iImage;
+            public int iOrder;
+            public int cxMin;
+            public int cxDefault;
+            public int cxIdeal;
+        }
+        public uint LVIF_TEXT = 0x0001;
+
+
+        private void Read(object sender, EventArgs e)
+        {
+            IntPtr rootHwnd = FindWindow("TaskManagerWindow", "任务管理器");
+            rootHwnd = FindWindowEx(rootHwnd, IntPtr.Zero, "NativeHWNDHost", null);
+            rootHwnd = FindWindowEx(rootHwnd, IntPtr.Zero, "DirectUIHWND", null);
+            IntPtr vHandle = FindWindowEx(rootHwnd, IntPtr.Zero, "CtrlNotifySink", null);
+
+            IntPtr lvHwnd = FindWindowEx(vHandle, IntPtr.Zero, "SysListView32", null);
+            while (lvHwnd == IntPtr.Zero)
+            {
+                vHandle = FindWindowEx(rootHwnd, vHandle, "CtrlNotifySink", null);
+                lvHwnd = FindWindowEx(vHandle, IntPtr.Zero, "SysListView32", null);
+            }
+            vHandle = lvHwnd;
+            if (vHandle == IntPtr.Zero) return;
+            int vItemCount = ListView_GetItemCount(vHandle);
+            uint vProcessId;
+            GetWindowThreadProcessId(vHandle, out vProcessId);
+
+            IntPtr vProcess = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_READ |
+                PROCESS_VM_WRITE, false, vProcessId);
+            IntPtr vPointer = VirtualAllocEx(vProcess, IntPtr.Zero, 4096,
+                MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+            try
+            {
+                for (int i = 0; i < vItemCount; i++)
+                {
+                    byte[] vBuffer = new byte[256];
+                    LVITEM[] vItem = new LVITEM[1];
+                    vItem[0].mask = LVIF_TEXT;
+                    vItem[0].iItem = i;
+                    vItem[0].iSubItem = i;
+                    vItem[0].cchTextMax = vBuffer.Length;
+                    vItem[0].pszText = (IntPtr)((int)vPointer + Marshal.SizeOf(typeof(LVITEM)));
+                    uint vNumberOfBytesRead = 0;
+
+                    WriteProcessMemory(vProcess, vPointer,
+                        Marshal.UnsafeAddrOfPinnedArrayElement(vItem, 0),
+                        Marshal.SizeOf(typeof(LVITEM)), ref vNumberOfBytesRead);
+                    SendMessage(vHandle, LVM_GETITEMW, 0, vPointer.ToInt32());
+                    ReadProcessMemory(vProcess,
+                        (IntPtr)((int)vPointer + Marshal.SizeOf(typeof(LVITEM))),
+                        Marshal.UnsafeAddrOfPinnedArrayElement(vBuffer, 0),
+                        vBuffer.Length, ref vNumberOfBytesRead);
+
+                    string vText = Marshal.PtrToStringUni(
+                        Marshal.UnsafeAddrOfPinnedArrayElement(vBuffer, 0));
+                    Console.WriteLine(vText);
+                }
+            }
+            finally
+            {
+                VirtualFreeEx(vProcess, vPointer, 0, MEM_RELEASE);
+                CloseHandle(vProcess);
+            }
+            Console.WriteLine(ListViewColumnCount(vHandle));
+        }
+        /// <summary>
+        /// 获取 ListView 的行数
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public int ListView_GetItemCount(IntPtr hwnd)
+        {
+            return SendMessage(hwnd, LVM_GETITEMCOUNT, 0, 0);
+        }
+
+        /// <summary>
+        /// 获取 ListView 的标题栏句柄
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        private IntPtr ListView_GetHeader(IntPtr hwnd)
+        {
+            return (IntPtr)SendMessage(hwnd, LVM_GETHEADER, 0, 0);
+        }
+
+        /// <summary>
+        /// 获取 ListView 的标题栏的列数
+        /// </summary>
+        /// <param name="header"></param>
+        /// <returns></returns>
+        private int Header_GetItemCount(IntPtr header)
+        {
+            return SendMessage(header, HDM_GETITEMCOUNT, 0, 0);
+        }
+
+        /// <summary>
+        /// 获取 ListView 的列数
+        /// </summary>
+        /// <param name="listViewHandle"></param>
+        /// <returns></returns>
+        int ListViewColumnCount(IntPtr listViewHandle)
+        {
+            return Header_GetItemCount(ListView_GetHeader(listViewHandle));
+        }
+        IntPtr hwnd;   //窗口句柄
+        IntPtr process;//进程句柄
+        IntPtr pointer;
+
+        private void read(object sender, EventArgs e)
+        {
+            IntPtr headerhwnd; //listview控件的列头句柄
+            int rows, cols;  //listview控件中的行列数
+            uint processId; //进程pid  
+
+            IntPtr rootHwnd = FindWindow("TaskManagerWindow", "任务管理器");
+            rootHwnd = FindWindowEx(rootHwnd, IntPtr.Zero, "NativeHWNDHost", null);
+            rootHwnd = FindWindowEx(rootHwnd, IntPtr.Zero, "DirectUIHWND", null);
+            IntPtr vHandle = FindWindowEx(rootHwnd, IntPtr.Zero, "CtrlNotifySink", null);
+
+            IntPtr lvHwnd = FindWindowEx(vHandle, IntPtr.Zero, "SysListView32", null);
+            while (lvHwnd == IntPtr.Zero)
+            {
+                vHandle = FindWindowEx(rootHwnd, vHandle, "CtrlNotifySink", null);
+                lvHwnd = FindWindowEx(vHandle, IntPtr.Zero, "SysListView32", null);
+            }
+            hwnd = lvHwnd;
+
+            headerhwnd = (IntPtr)SendMessage(hwnd, LVM_GETHEADER, 0, 0);//listview的列头句柄
+
+            rows = ListView_GetItemCount(hwnd);//总行数，即进程的数量
+            cols = ListViewColumnCount(hwnd);//列表列数
+            GetWindowThreadProcessId(hwnd, out processId);
+
+            //打开并插入进程
+            process = OpenProcess(PROCESS_VM_OPERATION | PROCESS_VM_READ | PROCESS_VM_WRITE, false, processId);
+            //申请代码的内存区,返回申请到的虚拟内存首地址
+            pointer = VirtualAllocEx(process, IntPtr.Zero, 4096, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+            string[,] tempStr;//二维数组
+            string[] temp = new string[cols];
+
+            tempStr = GetListViewItmeValue(rows, cols);//将要读取的其他程序中的ListView控件中的文本内容保存到二维数组中
+            ListView listView1 = new ListView();
+            listView1.Items.Clear();//清空LV控件信息
+            //输出数组中保存的其他程序的LV控件信息
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    temp[j] = tempStr[i, j];
+                }
+                ListViewItem lvi = new ListViewItem(temp);
+                listView1.Items.Add(lvi);
+            }
+            temp = GetListViewItmeValue(cols);
+        }
+
+        /// <summary>
+        /// 从内存中读取指定的LV控件的文本内容
+        /// </summary>
+        /// <param name="rows">要读取的LV控件的行数</param>
+        /// <param name="cols">要读取的LV控件的列数</param>
+        /// <returns>取得的LV控件信息</returns>
+        private string[,] GetListViewItmeValue(int rows, int cols)
+        {
+            string[,] tempStr = new string[rows, cols];//二维数组:保存LV控件的文本信息
+            bool type = Environment.Is64BitOperatingSystem;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < cols; j++)
+                {
+                    byte[] vBuffer = new byte[1024];//定义一个临时缓冲区
+                    LVITEM[] vItem = new LVITEM[1];
+                    vItem[0].mask = LVIF_TEXT;//说明pszText是有效的
+                    vItem[0].iItem = i;     //行号
+                    vItem[0].iSubItem = j;  //列号
+                    vItem[0].cchTextMax = vBuffer.Length;//所能存储的最大的文本为256字节
+                    if (type)
+                    {
+                        vItem[0].pszText = (IntPtr)(pointer.ToInt64() + Marshal.SizeOf(typeof(LVITEM)));
+                    }
+                    else
+                    {
+                        vItem[0].pszText = (IntPtr)(pointer + Marshal.SizeOf(typeof(LVITEM)));
+                    }
+                    uint vNumberOfBytesRead = 0;
+
+                    //把数据写到vItem中
+                    //pointer为申请到的内存的首地址
+                    //UnsafeAddrOfPinnedArrayElement:获取指定数组中指定索引处的元素的地址
+                    WriteProcessMemory(process, pointer, Marshal.UnsafeAddrOfPinnedArrayElement(vItem, 0), Marshal.SizeOf(typeof(LVITEM)), ref vNumberOfBytesRead);
+
+                    //发送LVM_GETITEMW消息给hwnd,将返回的结果写入pointer指向的内存空间
+                    User.SendMessage(hwnd, LVM_GETITEMW, i, pointer);
+
+                    //从pointer指向的内存地址开始读取数据,写入缓冲区vBuffer中
+                    ReadProcessMemory(process, (pointer + Marshal.SizeOf(typeof(LVITEM))), Marshal.UnsafeAddrOfPinnedArrayElement(vBuffer, 0), vBuffer.Length, ref vNumberOfBytesRead);
+
+                    string vText = Encoding.Unicode.GetString(vBuffer, 0, (int)vNumberOfBytesRead);
+                    vText = vText.Substring(0, vText.IndexOf('\0'));
+                    vBuffer = null;
+                    tempStr[i, j] = vText;
+                }
+            }
+            VirtualFreeEx(process, pointer, 0, MEM_RELEASE);//在其它进程中释放申请的虚拟内存空间,MEM_RELEASE方式很彻底,完全回收
+            CloseHandle(process);//关闭打开的进程对象
+            return tempStr;
+        }
+        /// <summary>
+        /// 从内存中读取指定的LV控件的文本内容
+        /// </summary>
+        /// <param name="rows">要读取的LV控件的行数</param>
+        /// <param name="cols">要读取的LV控件的列数</param>
+        /// <returns>取得的LV控件信息</returns>
+        private string[] GetListViewItmeValue(int cols)
+        {
+            string[] tempStr = new string[cols];//二维数组:保存LV控件的文本信息
+            bool type = Environment.Is64BitOperatingSystem;
+            for (int i = 0; i < cols; i++)
+            {
+                byte[] vBuffer = new byte[1024];//定义一个临时缓冲区
+                LVCOLUMNW[] vItem = new LVCOLUMNW[1];
+                vItem[0].mask = LVIF_TEXT;//说明pszText是有效的
+                vItem[0].iSubItem = i;  //列号
+                vItem[0].cchTextMax = vBuffer.Length;//所能存储的最大的文本为256字节
+                if (type)
+                {
+                    vItem[0].pszText = (IntPtr)(pointer.ToInt64() + Marshal.SizeOf(typeof(LVCOLUMNW)));
+                }
+                else
+                {
+                    vItem[0].pszText = (IntPtr)(pointer + Marshal.SizeOf(typeof(LVCOLUMNW)));
+                }
+                uint vNumberOfBytesRead = 0;
+
+                //把数据写到vItem中
+                //pointer为申请到的内存的首地址
+                //UnsafeAddrOfPinnedArrayElement:获取指定数组中指定索引处的元素的地址
+                WriteProcessMemory(process, pointer, Marshal.UnsafeAddrOfPinnedArrayElement(vItem, 0), Marshal.SizeOf(typeof(LVCOLUMNW)), ref vNumberOfBytesRead);
+
+                //发送LVM_GETITEMW消息给hwnd,将返回的结果写入pointer指向的内存空间
+                User.SendMessage(hwnd, HDM_GETITEMW, i, pointer);
+
+                //从pointer指向的内存地址开始读取数据,写入缓冲区vBuffer中
+                ReadProcessMemory(process, (pointer + Marshal.SizeOf(typeof(LVCOLUMNW))), Marshal.UnsafeAddrOfPinnedArrayElement(vBuffer, 0), vBuffer.Length, ref vNumberOfBytesRead);
+
+                string vText = Encoding.Unicode.GetString(vBuffer, 0, (int)vNumberOfBytesRead);
+                //vText = vText.Substring(0, vText.IndexOf('\0'));
+                vBuffer = null;
+                tempStr[i] = vText;
+            }
+            VirtualFreeEx(process, pointer, 0, MEM_RELEASE);//在其它进程中释放申请的虚拟内存空间,MEM_RELEASE方式很彻底,完全回收
+            CloseHandle(process);//关闭打开的进程对象
+            return tempStr;
         }
     }
 }
