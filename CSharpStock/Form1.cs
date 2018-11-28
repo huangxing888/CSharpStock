@@ -10,7 +10,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Model.THS;
 using Services;
+using Services.THS;
 using Win32;
 using static CSharpStock.Common;
 
@@ -18,11 +20,10 @@ namespace CSharpStock
 {
     public partial class Form1 : Form
     {
-        IntPtr main;
         public Form1()
         {
             InitializeComponent();
-            main = Common.GetIntPtrByProcess("xiadan");
+            Config.MainWindow = Common.GetIntPtrByProcess("xiadan");
         }
 
         
@@ -58,34 +59,37 @@ namespace CSharpStock
         //}
         private void button2_Click(object sender, EventArgs e)
         {
-            User.PostMessage(main, 256, User.VK_F1, 2);
+            User.PostMessage(Config.MainWindow, 256, User.VK_F1, 2);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            User.PostMessage(main, 256, User.VK_F2, 2);
+            User.PostMessage(Config.MainWindow, 256, User.VK_F2, 2);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            User.PostMessage(main, 256, User.VK_F3, 2);
+            User.PostMessage(Config.MainWindow, 256, User.VK_F3, 2);
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            User.PostMessage(main, 256, User.VK_F4, 2);
+            User.PostMessage(Config.MainWindow, 256, User.VK_F4, 2);
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            Common.Click(Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E901.00000000.00008016"));
+            Common.Click(Common.GetIntPtrByControlID(Config.MainWindow, "00000000.0000E900.0000E901.00000000.00008016"));
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            main = Common.GetIntPtrByProcess("taskmgr");
+            //main = Common.GetIntPtrByProcess("taskmgr");
             List<WindowInfo> windowInfos = new List<WindowInfo>();
-            Common.GetWindows(main, ref windowInfos);
-            MessageBox.Show( StockService.getStock(main)[0].code);
+            Common.GetWindows(Config.MainWindow, "", ref windowInfos);
+            var ctrl = windowInfos.Where(p => (p.DlgCtrlID == ".00000000.0000E900.0000E901.00000000.00008016".ToLower() && p.isVisible == 1)).ToArray();
+            //if (ctrl.Length > 0)
+            //    MessageBox.Show(ctrl.Length.ToString());
+            MessageBox.Show( StockService.GetStock(Config.MainWindow)[0].code);
             //main = Common.GetIntPtrByProcess("xiadan");
             //IntPtr treePtr = Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E900.00000081.000000C8.00000081");
 

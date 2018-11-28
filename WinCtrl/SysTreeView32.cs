@@ -141,7 +141,7 @@ namespace WinCtrl
                     while (cItem.itemHwnd != IntPtr.Zero)
                     {
                         result.Add(cItem);
-                        cItem = NextSiblingItem;
+                        cItem = cItem.NextSiblingItem;
                     }
                     return result;
                 }

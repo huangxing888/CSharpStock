@@ -34,6 +34,8 @@ namespace Model.THS
         /// </summary>
         public static IntPtr MainWindow { get; set; }
 
+        public static string Menu { get { return ".00000000.0000E900.0000E900.00000081.000000C8.00000081"; } }
+
         #region 菜单树
         public static string MenuBuy { get { return ""; } }
         public static string MenuSell { get { return ""; } }
@@ -47,25 +49,25 @@ namespace Model.THS
         public static int KeyStock { get { return User.VK_F4; } }
         #endregion
         #region 买入界面控件
-        public static string BuyCtrlCode { get { return "00000000.0000E900.0000E901.00000408"; } }
-        public static string BuyCtrlPrice { get { return "00000000.0000E900.0000E901.00000409"; } }
-        public static string BuyCtrlCount { get { return "00000000.0000E900.0000E901.0000040A"; } }
-        public static string BuyCtrlBuyButton { get { return "00000000.0000E900.0000E901.000003EE"; } }
-        public static string BuyCtrlConfirmButton { get { return "00000006"; } }
-        public static string BuyCtrlCancelButton { get { return "00000007"; } }
+        public static string BuyCtrlCode { get { return ".00000000.0000E900.0000E901.00000408"; } }
+        public static string BuyCtrlPrice { get { return ".00000000.0000E900.0000E901.00000409"; } }
+        public static string BuyCtrlCount { get { return ".00000000.0000E900.0000E901.0000040A"; } }
+        public static string BuyCtrlBuyButton { get { return ".00000000.0000E900.0000E901.000003EE"; } }
+        public static string BuyCtrlConfirmButton { get { return ".00000006"; } }
+        public static string BuyCtrlCancelButton { get { return ".00000007"; } }
         /// <summary>
         /// 买入界面刷新按钮
         /// </summary>
-        public static string BuyCtrlRefresh { get { return "00000000.0000E900.0000E901.00000000.00008016"; } }
+        public static string BuyCtrlRefresh { get { return ".00000000.0000E900.0000E901.00000000.00008016"; } }
         #endregion
         #region 卖出界面控件
 
-        public static string SellCtrlCode { get { return "00000000.0000E900.0000E901.00000408"; } }
-        public static string SellCtrlPrice { get { return "00000000.0000E900.0000E901.00000409"; } }
-        public static string SellCtrlCount { get { return "00000000.0000E900.0000E901.0000040A"; } }
-        public static string SellCtrlBuyButton { get { return "00000000.0000E900.0000E901.000003EE"; } }
-        public static string SellCtrlConfirmButton { get { return "00000006"; } }
-        public static string SellCtrlCancelButton { get { return "00000007"; } }
+        public static string SellCtrlCode { get { return ".00000000.0000E900.0000E901.00000408"; } }
+        public static string SellCtrlPrice { get { return ".00000000.0000E900.0000E901.00000409"; } }
+        public static string SellCtrlCount { get { return ".00000000.0000E900.0000E901.0000040A"; } }
+        public static string SellCtrlBuyButton { get { return ".00000000.0000E900.0000E901.000003EE"; } }
+        public static string SellCtrlConfirmButton { get { return ".00000006"; } }
+        public static string SellCtrlCancelButton { get { return ".00000007"; } }
         #endregion
         #region 撤单界面控件
 
@@ -75,7 +77,8 @@ namespace Model.THS
         /// <summary>
         /// 持仓刷新按钮
         /// </summary>
-        public static string StockCtrlRefresh { get { return "00000000.0000E900.0000E901.00000000.00008016"; } }
+        public static string StockCtrlRefresh { get { return ".00000000.0000E900.0000E901.00000000.00008016"; } }
+        public static string StockGrid { get { return ".00000000.0000E900.0000E901.00000417.000000C8.00000417"; } }
         #endregion
     }
 }

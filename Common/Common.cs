@@ -16,8 +16,8 @@ namespace CSharpStock
             public IntPtr hWnd;
             public string szWindowName;
             public string szClassName;
-            public long DlgCtrlID;
-            public string CtrlID;
+            public string DlgCtrlID;
+            public int isVisible;
         }
         /// <summary>
         /// 根据进程名获取第一个有窗体的句柄
@@ -72,10 +72,10 @@ namespace CSharpStock
                 wnd.szWindowName = sb.ToString();
 
                 //get window class 
-                User.GetClassName((IntPtr)hWnd, wnd.szClassName, sb.Capacity);
+                User.GetClassName((IntPtr)hWnd, sb, sb.Capacity);
                 wnd.szClassName = sb.ToString();
 
-                wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd);
+                wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd).ToString();
 
                 //add it into list 
                 wndList.Add(wnd);
@@ -84,18 +84,27 @@ namespace CSharpStock
             return wndList;
         }
 
-        public static void GetWindows(IntPtr window,ref List<WindowInfo> wndList )
+        public static void GetWindows(IntPtr window, string ctrlID, ref List<WindowInfo> wndList)
         {
             int curChild = 0;
             curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
-            while(curChild>0)
+            while (curChild > 0)
             {
-                wndList.Add(new WindowInfo()
-                {
-                    hWnd = (IntPtr)curChild
-                });
-                GetWindows((IntPtr)curChild, ref wndList);
+                WindowInfo curWindow = new WindowInfo();
+                StringBuilder sb = new StringBuilder(256);
+                curWindow.hWnd = (IntPtr)curChild;
+                User.GetWindowText((IntPtr)curChild, sb, sb.Capacity);
+                curWindow.szWindowName = sb.ToString();
+                User.GetClassName((IntPtr)curChild, sb, sb.Capacity);
+                curWindow.szClassName = sb.ToString();
+                curWindow.DlgCtrlID = ctrlID + "." + User.GetDlgCtrlID((IntPtr)curChild).ToString("x").PadLeft(8, '0');
+                curWindow.isVisible = User.IsWindowVisible((IntPtr)curChild);
+
+                wndList.Add(curWindow);
+                GetWindows((IntPtr)curChild, curWindow.DlgCtrlID, ref wndList);
+                curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
             }
+
         }
         /// <summary>
         /// 鼠标点击
@@ -154,6 +163,14 @@ namespace CSharpStock
         public static void SetTitle(IntPtr hWnd, string text)
         {
             User.SendMessage(hWnd, User.WM_SETTEXT, 0, text);
+        }
+        /// <summary>
+        /// 向指定窗体发送复制命令
+        /// </summary>
+        /// <param name="hwnd"></param>
+        public static void Copy(IntPtr hwnd)
+        {
+            User.SendMessage(hwnd, User.WM_COMMAND, 0x0000E122, IntPtr.Zero);
         }
     }
 }

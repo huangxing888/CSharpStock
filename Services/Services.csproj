@@ -57,6 +57,10 @@
       <Project>{3FD297DB-F255-40B0-9DE2-ED0AC5675DF4}</Project>
       <Name>Win32</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WinCtrl\WinCtrl.csproj">
+      <Project>{1085DB78-3BBE-4060-833F-A001AA8A2B01}</Project>
+      <Name>WinCtrl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

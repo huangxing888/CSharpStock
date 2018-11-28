@@ -2,26 +2,54 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CSharpStock;
 using Model.THS;
 using Win32;
+using WinCtrl;
+using static CSharpStock.Common;
 
-namespace Services
+namespace Services.THS
 {
     public class StockService
     {
+        public static List<WindowInfo> windows = new List<WindowInfo>();
+
+        public static SysTreeView32 menu;
+        
+        public static void InitMenu()
+        {
+            menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToLower()).FirstOrDefault().hWnd);
+        }
+
         #region 持仓
+        public static void SelectStockMenu()
+        {
+            Common.GetWindows(Config.MainWindow, "", ref windows);
+            InitMenu();
+            SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
+            item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
+            item.Select();
+        }
+
+        public static void RefreshStock()
+        {
+            Common.GetWindows(Config.MainWindow, "", ref windows);
+            Common.Click(windows.Where(p => p.DlgCtrlID == Config.StockCtrlRefresh.ToLower()).FirstOrDefault().hWnd);
+        }
         /// <summary>
         /// 获取当前持仓列表
         /// </summary>
         /// <param name="hwnd"></param>
         /// <returns></returns>
-        public static List<Stock> getStock(IntPtr hwnd)
+        public static List<Stock> GetStock(IntPtr hwnd)
         {
-            Common.BringToFront(hwnd);
-            Common.SendKeyWithCtrl(User.VK_KeyC);
+            //Common.BringToFront(hwnd);
+            //Common.SendKeyWithCtrl(User.VK_KeyC);
+            SelectStockMenu();
+            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockGrid.ToLower()).FirstOrDefault().hWnd);
             return GetStock(Clipboard.GetText());
         }
         /// <summary>
