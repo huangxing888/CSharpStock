@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Services;
 using Win32;
+using static CSharpStock.Common;
 
 namespace CSharpStock
 {
@@ -24,43 +25,37 @@ namespace CSharpStock
             main = Common.GetIntPtrByProcess("xiadan");
         }
 
-        public struct WindowInfo
-        {
-            public IntPtr hWnd;
-            public string szWindowName;
-            public string szClassName;
-            public long DlgCtrlID;
-        }
+        
 
-        public List<WindowInfo> addToDick(IntPtr window)
-        {
-            //用来保存窗口对象 列表
-            List<WindowInfo> wndList = new List<WindowInfo>();
-            //enum all desktop windows 
-            User.EnumChildWindows(window, delegate (IntPtr hWnd, int lParam)
-            {
-                WindowInfo wnd = new WindowInfo();
-                StringBuilder sb = new StringBuilder(256);
+        //public List<WindowInfo> addToDick(IntPtr window)
+        //{
+        //    //用来保存窗口对象 列表
+        //    List<WindowInfo> wndList = new List<WindowInfo>();
+        //    //enum all desktop windows 
+        //    User.EnumChildWindows(window, delegate (IntPtr hWnd, int lParam)
+        //    {
+        //        WindowInfo wnd = new WindowInfo();
+        //        StringBuilder sb = new StringBuilder(256);
 
-                //get hwnd 
-                wnd.hWnd = (IntPtr)hWnd;
+        //        //get hwnd 
+        //        wnd.hWnd = (IntPtr)hWnd;
 
-                //get window name  
-                User.GetWindowText((IntPtr)hWnd, sb, sb.Capacity);
-                wnd.szWindowName = sb.ToString();
+        //        //get window name  
+        //        User.GetWindowText((IntPtr)hWnd, sb, sb.Capacity);
+        //        wnd.szWindowName = sb.ToString();
 
-                //get window class 
-                User.GetClassName((IntPtr)hWnd, wnd.szClassName, sb.Capacity);
-                wnd.szClassName = sb.ToString();
+        //        //get window class 
+        //        User.GetClassName((IntPtr)hWnd, wnd.szClassName, sb.Capacity);
+        //        wnd.szClassName = sb.ToString();
 
-                wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd);
+        //        wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd);
 
-                //add it into list 
-                wndList.Add(wnd);
-                return true;
-            }, 0);
-            return wndList;
-        }
+        //        //add it into list 
+        //        wndList.Add(wnd);
+        //        return true;
+        //    }, 0);
+        //    return wndList;
+        //}
         private void button2_Click(object sender, EventArgs e)
         {
             User.PostMessage(main, 256, User.VK_F1, 2);
@@ -87,6 +82,9 @@ namespace CSharpStock
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            main = Common.GetIntPtrByProcess("taskmgr");
+            List<WindowInfo> windowInfos = new List<WindowInfo>();
+            Common.GetWindows(main, ref windowInfos);
             MessageBox.Show( StockService.getStock(main)[0].code);
             //main = Common.GetIntPtrByProcess("xiadan");
             //IntPtr treePtr = Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E900.00000081.000000C8.00000081");

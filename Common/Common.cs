@@ -11,6 +11,14 @@ namespace CSharpStock
 {
     public class Common
     {
+        public struct WindowInfo
+        {
+            public IntPtr hWnd;
+            public string szWindowName;
+            public string szClassName;
+            public long DlgCtrlID;
+            public string CtrlID;
+        }
         /// <summary>
         /// 根据进程名获取第一个有窗体的句柄
         /// </summary>
@@ -44,6 +52,50 @@ namespace CSharpStock
                 result = (IntPtr)User.GetDlgItem(result, Convert.ToInt32(ids[i], 16));
             }
             return result;
+        }
+
+        public List<WindowInfo> addToDick(IntPtr window)
+        {
+            //用来保存窗口对象 列表
+            List<WindowInfo> wndList = new List<WindowInfo>();
+            //enum all desktop windows 
+            User.EnumChildWindows(window, delegate (IntPtr hWnd, int lParam)
+            {
+                WindowInfo wnd = new WindowInfo();
+                StringBuilder sb = new StringBuilder(256);
+
+                //get hwnd 
+                wnd.hWnd = (IntPtr)hWnd;
+
+                //get window name  
+                User.GetWindowText((IntPtr)hWnd, sb, sb.Capacity);
+                wnd.szWindowName = sb.ToString();
+
+                //get window class 
+                User.GetClassName((IntPtr)hWnd, wnd.szClassName, sb.Capacity);
+                wnd.szClassName = sb.ToString();
+
+                wnd.DlgCtrlID = User.GetDlgCtrlID((IntPtr)hWnd);
+
+                //add it into list 
+                wndList.Add(wnd);
+                return true;
+            }, 0);
+            return wndList;
+        }
+
+        public static void GetWindows(IntPtr window,ref List<WindowInfo> wndList )
+        {
+            int curChild = 0;
+            curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
+            while(curChild>0)
+            {
+                wndList.Add(new WindowInfo()
+                {
+                    hWnd = (IntPtr)curChild
+                });
+                GetWindows((IntPtr)curChild, ref wndList);
+            }
         }
         /// <summary>
         /// 鼠标点击
