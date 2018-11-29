@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="THS\Config.cs" />
-    <Compile Include="THS\Stock.cs" />
+    <Compile Include="THS\StockModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

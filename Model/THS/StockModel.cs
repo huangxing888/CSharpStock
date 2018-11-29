@@ -9,7 +9,7 @@ using Win32;
 
 namespace Model.THS
 {
-    public class Stock
+    public class StockModel
     {
         /// <summary>
         /// 代码

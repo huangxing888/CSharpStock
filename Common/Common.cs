@@ -45,7 +45,7 @@ namespace CSharpStock
         /// <returns></returns>
         public static IntPtr GetIntPtrByControlID(IntPtr mainWindow, string id)
         {
-            string[] ids = id.Split(".".ToArray());
+            string[] ids = id.Split(".".ToArray(), StringSplitOptions.RemoveEmptyEntries);
             IntPtr result = mainWindow;
             for (int i = 0; i < ids.Length; i++)
             {
@@ -83,8 +83,13 @@ namespace CSharpStock
             }, 0);
             return wndList;
         }
-
-        public static void GetWindows(IntPtr window, ref List<WindowInfo> wndList, string ctrlID="")
+        /// <summary>
+        /// 获取指定窗体的所有子窗体
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="wndList"></param>
+        /// <param name="ctrlID"></param>
+        public static void GetWindows(IntPtr window, ref List<WindowInfo> wndList, string ctrlID = "")
         {
             int curChild = 0;
             curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
@@ -104,7 +109,19 @@ namespace CSharpStock
                 GetWindows((IntPtr)curChild, ref wndList, curWindow.DlgCtrlID);
                 curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
             }
-
+        }
+        /// <summary>
+        /// 从窗体列表中找到指定的控件
+        /// </summary>
+        /// <param name="windows"></param>
+        /// <param name="ctrlID"></param>
+        /// <returns></returns>
+        public static IntPtr GetWindowByCtrlID(List<WindowInfo> windows, string ctrlID)
+        {
+            var result = windows.Where(p => (p.DlgCtrlID == ctrlID.ToUpper() && p.isVisible == 1)).ToList();
+            if (result == null || result.Count < 1)
+            { return IntPtr.Zero; }
+            return result[0].hWnd;
         }
         /// <summary>
         /// 鼠标点击
@@ -112,6 +129,8 @@ namespace CSharpStock
         /// <param name="hWnd"></param>
         public static void Click(IntPtr hWnd)
         {
+            if (hWnd == IntPtr.Zero)
+                return;
             User.SendMessage(hWnd, User.WM_CLICK, 0, IntPtr.Zero);
         }
         /// <summary>
@@ -171,6 +190,15 @@ namespace CSharpStock
         public static void Copy(IntPtr hwnd)
         {
             User.SendMessage(hwnd, User.WM_COMMAND, 0x0000E122, IntPtr.Zero);
+        }
+        /// <summary>
+        /// 窗体是否可见
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        public static bool IsWindowVisible(IntPtr hwnd)
+        {
+            return User.IsWindowVisible(hwnd) == 1;
         }
     }
 }

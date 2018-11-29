@@ -12,11 +12,11 @@ namespace Model.THS
         /// <summary>
         /// 应用路径 D:\Program Files\同花顺v8\xiadan.exe
         /// </summary>
-        public static string ApplicationUrl { get; set; }
+        public static string ApplicationUrl { get { return @"D:\Program Files\同花顺v8\xiadan#stock.exe"; } }
         /// <summary>
         /// 程序名称 xiadan
         /// </summary>
-        public static string ApplicationName { get; set; }
+        public static string ApplicationName { get { return "xiadan#stock"; } }
         /// <summary>
         /// 标识名称 找到窗口后修改为指定的标识
         /// </summary>
@@ -28,13 +28,18 @@ namespace Model.THS
         /// <summary>
         /// 登录密码
         /// </summary>
-        public static string Password { get; set; }
+        public static string Password { get { return "826724"; } }
         /// <summary>
         /// 主窗体句柄
         /// </summary>
         public static IntPtr MainWindow { get; set; }
+        #region 登录界面
+        public static string LoginCtrlPassword { get { return ".00000000.000003F4"; } }
+        public static string LoginCtrlLogon { get { return ".00000000.000003EE"; } }
+        #endregion
 
         public static string Menu { get { return ".00000000.0000E900.0000E900.00000081.000000C8.00000081"; } }
+        public static string MainStatus { get { return ".0000E800.00000000.0000802C"; } }
 
         #region 菜单树
         public static string MenuBuy { get { return "买入[F1]"; } }
@@ -55,6 +60,7 @@ namespace Model.THS
         public static string BuyCtrlBuyButton { get { return ".00000000.0000E900.0000E901.000003EE"; } }
         public static string BuyCtrlConfirmButton { get { return ".00000006"; } }
         public static string BuyCtrlCancelButton { get { return ".00000007"; } }
+        public static string BuyCtrlGrid { get { return ".00000000.0000E900.0000E901.00000417.000000C8.00000417"; } }
         /// <summary>
         /// 买入界面刷新按钮
         /// </summary>
@@ -68,6 +74,7 @@ namespace Model.THS
         public static string SellCtrlBuyButton { get { return ".00000000.0000E900.0000E901.000003EE"; } }
         public static string SellCtrlConfirmButton { get { return ".00000006"; } }
         public static string SellCtrlCancelButton { get { return ".00000007"; } }
+        public static string SellCtrlGrid { get { return ".00000000.0000E900.0000E901.00000417.000000C8.00000417"; } }
         #endregion
         #region 撤单界面控件
 
@@ -78,7 +85,7 @@ namespace Model.THS
         /// 持仓刷新按钮
         /// </summary>
         public static string StockCtrlRefresh { get { return ".00000000.0000E900.0000E901.00000000.00008016"; } }
-        public static string StockGrid { get { return ".00000000.0000E900.0000E901.00000417.000000C8.00000417"; } }
+        public static string StockCtrlGrid { get { return ".00000000.0000E900.0000E901.00000417.000000C8.00000417"; } }
         #endregion
     }
 }

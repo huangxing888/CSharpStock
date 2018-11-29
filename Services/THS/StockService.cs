@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -18,17 +19,59 @@ namespace Services.THS
         public static List<WindowInfo> windows = new List<WindowInfo>();
 
         public static SysTreeView32 menu;
-        
+
+        public static IntPtr AutoLogin()
+        {
+            Process.Start(Config.ApplicationUrl);
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            IntPtr password = Common.GetIntPtrByControlID(Config.MainWindow, Config.LoginCtrlPassword);
+            while(password==IntPtr.Zero)
+            {
+                Common.GetWindows(IntPtr.Zero,ref windows);
+                password = Common.GetWindowByCtrlID(windows, Config.LoginCtrlPassword);
+            }
+            Common.SetTitle(password, Config.Password);
+            Common.Click(Common.GetWindowByCtrlID(windows, Config.LoginCtrlLogon));
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            while(Config.MainWindow==IntPtr.Zero)
+            {
+                Thread.Sleep(1000);
+                Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            }
+            return Config.MainWindow;
+        }
+        /// <summary>
+        /// 初始化窗体控件，强制转到精简模式
+        /// </summary>
+        public static void InitWindow()
+        {
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            if(Config.MainWindow==IntPtr.Zero)
+            {
+                Config.MainWindow = AutoLogin();
+            }
+            windows = new List<WindowInfo>();
+            IntPtr status = Common.GetIntPtrByControlID(Config.MainWindow, Config.MainStatus);
+            if (IsWindowVisible(status))
+            {
+                Common.Click(status);
+            }
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            Common.GetWindows(Config.MainWindow, ref windows);
+        }
+
         public static SysTreeView32 InitMenu()
         {
             menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToUpper()).FirstOrDefault().hWnd);
+            Console.WriteLine(menu.ItemCount);
             return menu;
         }
 
         #region 持仓
         public static void SelectStockMenu()
         {
-            Common.GetWindows(Config.MainWindow, ref windows);
+            //Common.GetWindows(Config.MainWindow, ref windows);
+            InitWindow();
             InitMenu().Select(Config.MenuStock);
             //SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
             //item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
@@ -38,19 +81,19 @@ namespace Services.THS
         public static void RefreshStock()
         {
             Common.GetWindows(Config.MainWindow, ref windows);
-            Common.Click(windows.Where(p => p.DlgCtrlID == Config.StockCtrlRefresh.ToUpper()).FirstOrDefault().hWnd);
+            Common.Click(GetWindowByCtrlID(windows, Config.StockCtrlRefresh));
         }
         /// <summary>
         /// 获取当前持仓列表
         /// </summary>
         /// <param name="hwnd"></param>
         /// <returns></returns>
-        public static List<Stock> GetStock(IntPtr hwnd)
+        public static List<StockModel> GetStock(IntPtr hwnd)
         {
             //Common.BringToFront(hwnd);
             //Common.SendKeyWithCtrl(User.VK_KeyC);
             SelectStockMenu();
-            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockGrid.ToUpper()).FirstOrDefault().hWnd);
+            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockCtrlGrid.ToUpper()).FirstOrDefault().hWnd);
             return GetStock(Clipboard.GetText());
         }
         /// <summary>
@@ -58,11 +101,11 @@ namespace Services.THS
         /// </summary>
         /// <param name="clipStr"></param>
         /// <returns></returns>
-        public static List<Stock> GetStock(string clipStr)
+        public static List<StockModel> GetStock(string clipStr)
         {
             if (string.IsNullOrEmpty(clipStr))
                 return null;
-            List<Stock> result = new List<Stock>();
+            List<StockModel> result = new List<StockModel>();
             string[] tmp = clipStr.Split(new string[1] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             if (tmp.Length > 1)
             {
@@ -70,7 +113,7 @@ namespace Services.THS
                 for (int i = 1; i < tmp.Length; i++)
                 {
                     string[] items = tmp[i].Split(new string[1] { "\t" }, StringSplitOptions.None);
-                    Stock sItem = new Stock();
+                    StockModel sItem = new StockModel();
                     for (int j = 0; j < titles.Length; j++)
                     {
                         switch (titles[j])
