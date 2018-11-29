@@ -86,7 +86,7 @@ namespace CSharpStock
             //main = Common.GetIntPtrByProcess("taskmgr");
             List<WindowInfo> windowInfos = new List<WindowInfo>();
             Common.GetWindows(Config.MainWindow, ref windowInfos);
-            var ctrl = windowInfos.Where(p => (p.DlgCtrlID == ".00000000.0000E900.0000E901.00000000.00008016".ToLower() && p.isVisible == 1)).ToArray();
+            var ctrl = windowInfos.Where(p => (p.DlgCtrlID == ".00000000.0000E900.0000E901.00000000.00008016".ToUpper() && p.isVisible == 1)).ToArray();
             //if (ctrl.Length > 0)
             //    MessageBox.Show(ctrl.Length.ToString());
             MessageBox.Show( StockService.GetStock(Config.MainWindow)[0].code);

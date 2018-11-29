@@ -97,7 +97,7 @@ namespace CSharpStock
                 curWindow.szWindowName = sb.ToString();
                 User.GetClassName((IntPtr)curChild, sb, sb.Capacity);
                 curWindow.szClassName = sb.ToString();
-                curWindow.DlgCtrlID = ctrlID + "." + User.GetDlgCtrlID((IntPtr)curChild).ToString("x").PadLeft(8, '0');
+                curWindow.DlgCtrlID = (ctrlID + "." + User.GetDlgCtrlID((IntPtr)curChild).ToString("x").PadLeft(8, '0')).ToUpper();
                 curWindow.isVisible = User.IsWindowVisible((IntPtr)curChild);
 
                 wndList.Add(curWindow);

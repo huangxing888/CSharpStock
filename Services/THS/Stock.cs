@@ -21,7 +21,7 @@ namespace Services.THS
         
         public static SysTreeView32 InitMenu()
         {
-            menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToLower()).FirstOrDefault().hWnd);
+            menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToUpper()).FirstOrDefault().hWnd);
             return menu;
         }
 
@@ -29,7 +29,7 @@ namespace Services.THS
         public static void SelectStockMenu()
         {
             Common.GetWindows(Config.MainWindow, ref windows);
-            InitMenu().Select("查询[F4].资金股票");
+            InitMenu().Select(Config.MenuStock);
             //SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
             //item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
             //item.Select();
@@ -38,7 +38,7 @@ namespace Services.THS
         public static void RefreshStock()
         {
             Common.GetWindows(Config.MainWindow, ref windows);
-            Common.Click(windows.Where(p => p.DlgCtrlID == Config.StockCtrlRefresh.ToLower()).FirstOrDefault().hWnd);
+            Common.Click(windows.Where(p => p.DlgCtrlID == Config.StockCtrlRefresh.ToUpper()).FirstOrDefault().hWnd);
         }
         /// <summary>
         /// 获取当前持仓列表
@@ -50,7 +50,7 @@ namespace Services.THS
             //Common.BringToFront(hwnd);
             //Common.SendKeyWithCtrl(User.VK_KeyC);
             SelectStockMenu();
-            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockGrid.ToLower()).FirstOrDefault().hWnd);
+            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockGrid.ToUpper()).FirstOrDefault().hWnd);
             return GetStock(Clipboard.GetText());
         }
         /// <summary>
@@ -102,14 +102,28 @@ namespace Services.THS
 
         #region 买入下单
 
+        public static void SelectBuyMenu()
+        {
+            Common.GetWindows(Config.MainWindow, ref windows);
+            InitMenu().Select(Config.MenuBuy);
+        }
         #endregion
 
         #region 卖出下单
-
+        public static void SelectSellMenu()
+        {
+            Common.GetWindows(Config.MainWindow, ref windows);
+            InitMenu().Select(Config.MenuSell);
+        }
         #endregion
 
         #region 撤单
 
+        public static void SelectRevertMenu()
+        {
+            Common.GetWindows(Config.MainWindow, ref windows);
+            InitMenu().Select(Config.MenuRevert);
+        }
         #endregion
 
         #region 登录，初始化

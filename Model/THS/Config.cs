@@ -37,10 +37,10 @@ namespace Model.THS
         public static string Menu { get { return ".00000000.0000E900.0000E900.00000081.000000C8.00000081"; } }
 
         #region 菜单树
-        public static string MenuBuy { get { return ""; } }
-        public static string MenuSell { get { return ""; } }
-        public static string MenuRevert { get { return ""; } }
-        public static string MenuStock { get { return ""; } }
+        public static string MenuBuy { get { return "买入[F1]"; } }
+        public static string MenuSell { get { return "卖出[F2]"; } }
+        public static string MenuRevert { get { return "撤单[F3]"; } }
+        public static string MenuStock { get { return "查询[F4].资金股票"; } }
         #endregion
         #region 快捷键
         public static int KeyBuy { get { return User.VK_F1; } }
