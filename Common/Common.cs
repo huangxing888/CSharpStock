@@ -84,7 +84,7 @@ namespace CSharpStock
             return wndList;
         }
 
-        public static void GetWindows(IntPtr window, string ctrlID, ref List<WindowInfo> wndList)
+        public static void GetWindows(IntPtr window, ref List<WindowInfo> wndList, string ctrlID="")
         {
             int curChild = 0;
             curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
@@ -101,7 +101,7 @@ namespace CSharpStock
                 curWindow.isVisible = User.IsWindowVisible((IntPtr)curChild);
 
                 wndList.Add(curWindow);
-                GetWindows((IntPtr)curChild, curWindow.DlgCtrlID, ref wndList);
+                GetWindows((IntPtr)curChild, ref wndList, curWindow.DlgCtrlID);
                 curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
             }
 

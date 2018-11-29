@@ -19,24 +19,25 @@ namespace Services.THS
 
         public static SysTreeView32 menu;
         
-        public static void InitMenu()
+        public static SysTreeView32 InitMenu()
         {
             menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToLower()).FirstOrDefault().hWnd);
+            return menu;
         }
 
         #region 持仓
         public static void SelectStockMenu()
         {
-            Common.GetWindows(Config.MainWindow, "", ref windows);
-            InitMenu();
-            SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
-            item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
-            item.Select();
+            Common.GetWindows(Config.MainWindow, ref windows);
+            InitMenu().Select("查询[F4].资金股票");
+            //SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
+            //item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
+            //item.Select();
         }
 
         public static void RefreshStock()
         {
-            Common.GetWindows(Config.MainWindow, "", ref windows);
+            Common.GetWindows(Config.MainWindow, ref windows);
             Common.Click(windows.Where(p => p.DlgCtrlID == Config.StockCtrlRefresh.ToLower()).FirstOrDefault().hWnd);
         }
         /// <summary>

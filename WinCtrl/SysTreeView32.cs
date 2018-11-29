@@ -51,6 +51,23 @@ namespace WinCtrl
                 }
             }
         }
+        /// <summary>
+        /// 选择指定的菜单
+        /// </summary>
+        /// <param name="menu">菜单路径 例："节点1.子节点1.叶子节点2"</param>
+        /// <returns></returns>
+        public bool Select(string menu)
+        {
+            string[] menus = menu.Split(".".ToArray());
+            if (menus.Length < 1)
+                return false;
+            SysTreeView32_Item item = this.ChildItems.Where(p => p.text == menus[0]).FirstOrDefault();
+            for(int i=1;i<menus.Length;i++)
+            {
+                item=item.ChildItems.Where(p => p.text == menus[i]).FirstOrDefault();
+            }
+            return User.SendMessage(this.hwnd, SysTreeView32.TVM_SELECTITEM, SysTreeView32.TVGN_CARET, item.itemHwnd) == 1;
+        }
         #endregion
 
         #region 常量定义
