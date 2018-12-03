@@ -749,6 +749,7 @@ namespace Win32
         [DllImport("user32")] public static extern int GetWindowPlacement(HWND hwnd, ref WINDOWPLACEMENT lpwndpl);
         [DllImport("user32")] public static extern int GetWindowRect(HWND hwnd, ref RECT lpRect);
         [DllImport("user32")] public static extern int GetWindowRgn(HWND hwnd, HANDLE hRgn);
+        [DllImport("user32")] public static extern int GetWindowText(HWND hwnd, ref string lpString);
         [DllImport("user32")] public static extern int GetWindowText(HWND hwnd, StringBuilder lpString, int cch);
         [DllImport("user32")] public static extern int GetWindowTextLength(HWND hwnd);
         [DllImport("user32")] public static extern int GetWindowThreadProcessId(HWND hwnd, ref int lpdwProcessId);

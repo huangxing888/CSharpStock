@@ -89,10 +89,13 @@ namespace CSharpStock
             var ctrl = windowInfos.Where(p => (p.DlgCtrlID == ".00000000.0000E900.0000E901.00000000.00008016".ToUpper() && p.isVisible == 1)).ToArray();
             //if (ctrl.Length > 0)
             //    MessageBox.Show(ctrl.Length.ToString());
-            MessageBox.Show(StockService.GetMyAsset().availableMoney.ToString());
-            MessageBox.Show(StockService.GetMyAsset().moratoriumMoney.ToString());
-            MessageBox.Show(StockService.GetMyAsset().stockMoney.ToString());
-            MessageBox.Show(StockService.GetMyAsset().allAsset.ToString());
+            StockService.SellStock("300446", (decimal)17.12, 100);
+            StockService.BuyStock("300446", (decimal)17.12, 100);
+            MessageBox.Show(Common.GetTitle(Common.GetWindowByCtrlID(StockService.windows, Config.BuyCtrlPrice)));
+            //MessageBox.Show(StockService.GetMyAsset().availableMoney.ToString());
+            //MessageBox.Show(StockService.GetMyAsset().moratoriumMoney.ToString());
+            //MessageBox.Show(StockService.GetMyAsset().stockMoney.ToString());
+            //MessageBox.Show(StockService.GetMyAsset().allAsset.ToString());
             //main = Common.GetIntPtrByProcess("xiadan");
             //IntPtr treePtr = Common.GetIntPtrByControlID(main, "00000000.0000E900.0000E900.00000081.000000C8.00000081");
 

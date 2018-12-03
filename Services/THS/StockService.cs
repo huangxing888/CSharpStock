@@ -121,19 +121,50 @@ namespace Services.THS
         #endregion
 
         #region 买入下单
-
+        /// <summary>
+        /// 选择买入界面
+        /// </summary>
         public static void SelectBuyMenu()
         {
-            Common.GetWindows(Config.MainWindow, ref windows);
+            InitWindow();
             InitMenu().Select(Config.MenuBuy);
+        }
+
+        public static void BuyStock(string code,decimal price,int count)
+        {
+            SelectBuyMenu();
+            IntPtr codeIntptr = Common.GetWindowByCtrlID(windows, Config.BuyCtrlCode);
+            while (codeIntptr == IntPtr.Zero)
+            {
+                Thread.Sleep(10);
+                Common.GetWindows(Config.MainWindow, ref windows);
+                codeIntptr = Common.GetWindowByCtrlID(windows, Config.BuyCtrlCode);
+            }
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.BuyCtrlPrice), price.ToString());
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.BuyCtrlCount), count.ToString());
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.BuyCtrlCode), code);
         }
         #endregion
 
         #region 卖出下单
         public static void SelectSellMenu()
         {
-            Common.GetWindows(Config.MainWindow, ref windows);
+            InitWindow();
             InitMenu().Select(Config.MenuSell);
+        }
+        public static void SellStock(string code, decimal price, int count)
+        {
+            SelectSellMenu();
+            IntPtr codeIntptr = Common.GetWindowByCtrlID(windows, Config.SellCtrlCode);
+            while (codeIntptr == IntPtr.Zero)
+            {
+                Thread.Sleep(10);
+                Common.GetWindows(Config.MainWindow, ref windows);
+                codeIntptr = Common.GetWindowByCtrlID(windows, Config.SellCtrlCode);
+            }
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.SellCtrlPrice), price.ToString());
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.SellCtrlCount), count.ToString());
+            Common.SetTitle(Common.GetWindowByCtrlID(windows, Config.SellCtrlCode), code);
         }
         #endregion
 

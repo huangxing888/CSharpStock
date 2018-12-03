@@ -180,7 +180,8 @@ namespace CSharpStock
         /// <returns></returns>
         public static string GetTitle(IntPtr hWnd)
         {
-            StringBuilder sb = new StringBuilder(User.GetWindowTextLength(hWnd));
+            int length = User.GetWindowTextLength(hWnd);
+            StringBuilder sb = new StringBuilder(length == 0 ? 512 : length);
             User.GetWindowText(hWnd, sb, sb.Capacity);
             return sb.ToString();
         }
