@@ -10,7 +10,6 @@ using CSharpStock;
 using Model.THS;
 using Win32;
 using WinCtrl;
-using static CSharpStock.Common;
 
 namespace Services.THS
 {
@@ -19,82 +18,60 @@ namespace Services.THS
         public static List<WindowInfo> windows = new List<WindowInfo>();
 
         public static SysTreeView32 menu;
-
-        public static IntPtr AutoLogin()
-        {
-            Process.Start(Config.ApplicationUrl);
-            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
-            IntPtr password = Common.GetIntPtrByControlID(Config.MainWindow, Config.LoginCtrlPassword);
-            while(password==IntPtr.Zero)
-            {
-                Common.GetWindows(IntPtr.Zero,ref windows);
-                password = Common.GetWindowByCtrlID(windows, Config.LoginCtrlPassword);
-            }
-            Common.SetTitle(password, Config.Password);
-            Common.Click(Common.GetWindowByCtrlID(windows, Config.LoginCtrlLogon));
-            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
-            while(Config.MainWindow==IntPtr.Zero)
-            {
-                Thread.Sleep(1000);
-                Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
-            }
-            return Config.MainWindow;
-        }
-        /// <summary>
-        /// 初始化窗体控件，强制转到精简模式
-        /// </summary>
-        public static void InitWindow()
-        {
-            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
-            if(Config.MainWindow==IntPtr.Zero)
-            {
-                Config.MainWindow = AutoLogin();
-            }
-            windows = new List<WindowInfo>();
-            IntPtr status = Common.GetIntPtrByControlID(Config.MainWindow, Config.MainStatus);
-            if (IsWindowVisible(status))
-            {
-                Common.Click(status);
-            }
-            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
-            Common.GetWindows(Config.MainWindow, ref windows);
-        }
-
-        public static SysTreeView32 InitMenu()
-        {
-            menu = new SysTreeView32(windows.Where(p => p.DlgCtrlID == Config.Menu.ToUpper()).FirstOrDefault().hWnd);
-            Console.WriteLine(menu.ItemCount);
-            return menu;
-        }
-
         #region 持仓
+        /// <summary>
+        /// 选择持仓界面
+        /// </summary>
         public static void SelectStockMenu()
         {
-            //Common.GetWindows(Config.MainWindow, ref windows);
             InitWindow();
             InitMenu().Select(Config.MenuStock);
-            //SysTreeView32_Item item = menu.ChildItems.Where(p => p.text == "查询[F4]").FirstOrDefault();
-            //item = item.ChildItems.Where(p=>p.text=="资金股票").FirstOrDefault();
-            //item.Select();
         }
-
+        /// <summary>
+        /// 刷新持仓
+        /// </summary>
         public static void RefreshStock()
         {
             Common.GetWindows(Config.MainWindow, ref windows);
-            Common.Click(GetWindowByCtrlID(windows, Config.StockCtrlRefresh));
+            Common.Click(Common.GetWindowByCtrlID(windows, Config.StockCtrlRefresh));
         }
         /// <summary>
         /// 获取当前持仓列表
         /// </summary>
-        /// <param name="hwnd"></param>
         /// <returns></returns>
-        public static List<StockModel> GetStock(IntPtr hwnd)
+        public static List<StockModel> GetStock()
         {
             //Common.BringToFront(hwnd);
-            //Common.SendKeyWithCtrl(User.VK_KeyC);
             SelectStockMenu();
-            Common.Copy(windows.Where(p => p.DlgCtrlID == Config.StockCtrlGrid.ToUpper()).FirstOrDefault().hWnd);
+            RefreshStock();
+            string tmp = "stock";
+            int reTryLimit = 0;
+            while (!Clipboard.GetText().Contains("证券代码")&& !Clipboard.GetText().Equals(tmp))
+            {
+                tmp = Clipboard.GetText();
+                Thread.Sleep(500);
+                Common.Copy(Common.GetWindowByCtrlID(windows, Config.StockCtrlGrid));
+                reTryLimit += 1;
+                if (reTryLimit > 100)
+                {
+                    return new List<StockModel>();
+                }
+            }
             return GetStock(Clipboard.GetText());
+        }
+        /// <summary>
+        /// 获取持仓界面数据
+        /// </summary>
+        /// <returns></returns>
+        public static MyAsset GetMyAsset()
+        {
+            MyAsset result = new MyAsset();
+            result.stockList = GetStock();
+            result.availableMoney = decimal.Parse(Common.GetTitle(Common.GetWindowByCtrlID(windows, Config.StockCtrlAvaliableMoney)));
+            result.moratoriumMoney = decimal.Parse(Common.GetTitle(Common.GetWindowByCtrlID(windows, Config.StockCtrlMoratoriumMoney)));
+            result.stockMoney = decimal.Parse(Common.GetTitle(Common.GetWindowByCtrlID(windows, Config.StockCtrlStockMoney)));
+            result.allAsset = decimal.Parse(Common.GetTitle(Common.GetWindowByCtrlID(windows, Config.StockCtrlAllAsset)));
+            return result;
         }
         /// <summary>
         /// 根据复制的文本转换成持仓数据实体
@@ -170,9 +147,59 @@ namespace Services.THS
         #endregion
 
         #region 登录，初始化
-        public static IntPtr GetMainHwnd()
+        /// <summary>
+        /// 自动启动程序并登录
+        /// </summary>
+        /// <returns></returns>
+        public static IntPtr AutoLogin()
         {
-            return Common.GetIntPtrByProcess("xiadan");
+            Process.Start(Config.ApplicationUrl);
+            Common.GetWindows(IntPtr.Zero, ref windows);
+            IntPtr password = Common.GetWindowByCtrlID(windows, Config.LoginCtrlPassword);
+            while (password == IntPtr.Zero)
+            {
+                Common.GetWindows(IntPtr.Zero, ref windows);
+                password = Common.GetWindowByCtrlID(windows, Config.LoginCtrlPassword);
+            }
+            Common.SetTitle(password, Config.Password);
+            Common.Click(Common.GetWindowByCtrlID(windows, Config.LoginCtrlLogon));
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            while (Config.MainWindow == IntPtr.Zero)
+            {
+                Thread.Sleep(500);
+                Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            }
+            return Config.MainWindow;
+        }
+        /// <summary>
+        /// 初始化窗体控件，强制转到精简模式
+        /// </summary>
+        public static void InitWindow()
+        {
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            if (Config.MainWindow == IntPtr.Zero)
+            {
+                Config.MainWindow = AutoLogin();
+            }
+            windows = new List<WindowInfo>();
+            Common.GetWindows(Config.MainWindow, ref windows);
+            IntPtr status = Common.GetWindowByCtrlID(windows, Config.MainStatus);
+            if (Common.IsWindowVisible(status))
+            {
+                Common.Click(status);
+            }
+            Config.MainWindow = Common.GetIntPtrByProcess(Config.ApplicationName);
+            Common.GetWindows(Config.MainWindow, ref windows);
+        }
+        /// <summary>
+        /// 初始化菜单
+        /// </summary>
+        /// <returns></returns>
+        public static SysTreeView32 InitMenu()
+        {
+            Common.GetWindows(Config.MainWindow, ref windows);
+            menu = new SysTreeView32(Common.GetWindowByCtrlID(windows, Config.Menu));
+            return menu;
         }
         #endregion
     }

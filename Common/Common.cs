@@ -9,16 +9,16 @@ using Win32;
 
 namespace CSharpStock
 {
+    public struct WindowInfo
+    {
+        public IntPtr hWnd;
+        public string szWindowName;
+        public string szClassName;
+        public string DlgCtrlID;
+        public int isVisible;
+    }
     public class Common
     {
-        public struct WindowInfo
-        {
-            public IntPtr hWnd;
-            public string szWindowName;
-            public string szClassName;
-            public string DlgCtrlID;
-            public int isVisible;
-        }
         /// <summary>
         /// 根据进程名获取第一个有窗体的句柄
         /// </summary>
@@ -88,8 +88,18 @@ namespace CSharpStock
         /// </summary>
         /// <param name="window"></param>
         /// <param name="wndList"></param>
+        public static void GetWindows(IntPtr window, ref List<WindowInfo> wndList)
+        {
+            wndList = new List<WindowInfo>();
+            GetWindows(window, ref wndList, "");
+        }
+        /// <summary>
+        /// 获取指定窗体的所有子窗体
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="wndList"></param>
         /// <param name="ctrlID"></param>
-        public static void GetWindows(IntPtr window, ref List<WindowInfo> wndList, string ctrlID = "")
+        private static void GetWindows(IntPtr window, ref List<WindowInfo> wndList, string ctrlID = "")
         {
             int curChild = 0;
             curChild = User.FindWindowEx(window, (IntPtr)curChild, null, null);
